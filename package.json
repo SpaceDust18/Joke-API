@@ -1,0 +1,25 @@
+{
+  "name": "joke-api",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js", 
+    "dev": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpaceDust18/Joke-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SpaceDust18/Joke-API/issues"
+  },
+  "homepage": "https://github.com/SpaceDust18/Joke-API#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

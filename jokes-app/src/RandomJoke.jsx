@@ -10,7 +10,7 @@ export default function RandomJoke({ randomJokeId, setRandomJokeId, setView }) {
       try {
         const response = await fetch(`http://localhost:3000/mockJokes/${randomJokeId}`);
         const data = await response.json();
-        setJoke(data); // Assuming the API returns the joke object directly
+        setJoke(data);
       } catch (error) {
         console.error("Error fetching joke", error);
       }

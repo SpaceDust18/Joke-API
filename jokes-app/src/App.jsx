@@ -1,37 +1,34 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import JokeList from "./JokeList.jsx"
-import RandomJoke from './RandomJoke.jsx'
-import { BrowserRouter } from "react-router-dom"
+import { useState, useEffect } from 'react';
+import './App.css';
+import JokeList from "./JokeList.jsx";
+import RandomJoke from './RandomJoke.jsx';
 
 export default function App() {
-  const [jokes, setJokes] = useState([])
-  const [randomJokeId, setRandomJokeId] = useState(null)
-  const [view, setView] = useState("jokes")
+  const [jokes, setJokes] = useState([]);
+  const [randomJokeId, setRandomJokeId] = useState(null);
+  const [view, setView] = useState("jokes");
 
-async function fetchJokes() {
+  
+
+  async function fetchJokes() {
     try {
-      const response = await ("http://localhost:3000/api/mockJokes");
-      const data = await response.json();
-      setJokes(data.jokes);
+      const res = await fetch("http://localhost:3000/mockJokes");
+      const data = await res.json()
+      setJokes(data);
       console.log(data);
     } catch (error) {
-      console.error("Fetch error:", error)
+      console.error("Fetch error:", error);
     }
-  };
+  }
 
   useEffect(() => {
     fetchJokes();
   }, []);
 
   return (
-
-    <BrowserRouter>
-
-      <div >
-        <div >
-          <h1>Welcome to LaughScript!</h1>
-        </div>
+    <>
+      <div>
+        <h1>Welcome to LaughScript!</h1>
       </div>
       <div>
         <p className="introduction">
@@ -40,23 +37,20 @@ async function fetchJokes() {
       </div>
 
       <div className="app-container">
-        <>
+        {view === "jokes" && 
+        <JokeList 
+        jokes={jokes} 
+        setJokes={setJokes} 
+        setRandomJokeId={setRandomJokeId} 
+        setView={setView} />}
 
-          <JokeList 
-            jokes={jokes}
-            setJokes={setJokes}
-            setRandomJokeId={setRandomJokeId}
-            setView={setView}
-            fetchJokes={fetchJokes}
-          />
 
-          <RandomJoke randomJokeId={randomJokeId} setRandomJokeId={setRandomJokeId} setView={setView} />
-
-        </>
-
+        <RandomJoke
+          randomJokeId={randomJokeId}
+          setRandomJokeId={setRandomJokeId}
+          setView={setView}
+        />
       </div>
-
-    </BrowserRouter>
-  )
-};
-
+    </>
+  );
+}

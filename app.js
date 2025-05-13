@@ -1,7 +1,10 @@
 import express from "express"
 import jokes from "./mockJokes.js";
+import cors from "cors";
 
 const app = express()
+
+app.use(cors({ origin: "http://localhost:5173" }));
 
 app.route("/mockJokes/random").get((req, res) => {
     if (!jokes || jokes.length === 0) {

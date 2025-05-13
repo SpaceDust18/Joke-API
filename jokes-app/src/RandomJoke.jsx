@@ -1,53 +1,36 @@
 import React, { useState, useEffect } from "react";
 
-export default function RandomJoke({
-    randomJokeId,
-    setRandomJokeId,
-    setView
-}) {
-    const [joke, setJoke] = useState()
+export default function RandomJoke({ randomJokeId, setRandomJokeId, setView }) {
+  const [joke, setJoke] = useState(null);
 
-    useEffect(() => {
-        async function fetchJoke() {
-            try {
-                const response = await fetch(`http://localhost:3000/api/mockJokes/${randomJokeId}`
-                );
-                const data = await response.json();
-                setJoke(data.joke)
-            } catch (error) {
-                console.error("Error fetching joke", error);
-            }
-        }
-        fetchJoke();
-    }, [randomJokeId]);
-}
-
-useEffect(() => {
+  useEffect(() => {
     if (!randomJokeId) return;
-    async function fetchJoke() {
-        try {
-            const response = await fetch(`http://localhost:3000/api/mockJokes/${randomJokeId}`);
-            const data = await response.json();
-            setJoke(data.joke);
-        } catch (error) {
-            console.error("Error fetching joke", error);
-        }
-    }
-    fetchJoke();
-}, [randomJokeId]);
 
-const handleBack = () => {
+    async function fetchJoke() {
+      try {
+        const response = await fetch(`http://localhost:3000/mockJokes/${randomJokeId}`);
+        const data = await response.json();
+        setJoke(data); // Assuming the API returns the joke object directly
+      } catch (error) {
+        console.error("Error fetching joke", error);
+      }
+    }
+
+    fetchJoke();
+  }, [randomJokeId]);
+
+  const handleBack = () => {
     setRandomJokeId(null);
     setView("jokes");
-};
+  };
 
-if (!joke) return null;
+  if (!joke) return <p>Loading joke...</p>;
 
-return (
+  return (
     <div>
-        <h2>Random Joke</h2>
-        <p>{joke}</p>
-        <button onClick={handleBack}>Back to Joke List</button>
+      <h2>Random Joke</h2>
+      <p>{joke.text}</p>
+      <button onClick={handleBack}>Back to Joke List</button>
     </div>
-);
-
+  );
+}
